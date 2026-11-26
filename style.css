@@ -1,0 +1,182 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    color: #222;
+}
+
+/* HEADER */
+
+header {
+    background: #10243a;
+    color: white;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: #ffcc00;
+}
+
+/* HERO */
+
+.hero {
+    background: #183b5b;
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.search-box input {
+    padding: 14px;
+    width: 280px;
+    border: none;
+    border-radius: 5px;
+}
+
+button {
+    background: #ffb800;
+    color: #222;
+    border: none;
+    padding: 13px 22px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #e69f00;
+}
+
+/* VEHICLE SECTIONS */
+
+.vehicles {
+    padding: 50px 7%;
+}
+
+.vehicles h2 {
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+.vehicle-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.vehicle-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+
+.vehicle-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 7px;
+}
+
+.vehicle-card h3 {
+    margin: 12px 0;
+}
+
+.vehicle-card p {
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.vehicle-card button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* SELL SECTION */
+
+.sell-section {
+    background: #183b5b;
+    color: white;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.sell-section h2 {
+    margin-bottom: 15px;
+}
+
+.sell-section p {
+    margin-bottom: 20px;
+}
+
+/* FOOTER */
+
+footer {
+    background: #10243a;
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+footer p {
+    margin-top: 10px;
+}
+
+/* MOBILE DESIGN */
+
+@media (max-width: 768px) {
+
+    header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    nav a {
+        margin: 8px;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .search-box input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .vehicle-container {
+        grid-template-columns: 1fr;
+    }
+
+}
