@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Your Vehicle | Vehicle Finder</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #172b4d;
+        }
+
+        header {
+            background: #10243e;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .form-container {
+            width: 94%;
+            max-width: 750px;
+            margin: 35px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+        }
+
+        h1 { text-align: center; margin-bottom: 10px; }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d5dce5;
+            border-radius: 7px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #087bda;
+        }
+
+        textarea { min-height: 130px; resize: vertical; }
+
+        .help-text {
+            color: #777;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .word-counter {
+            text-align: right;
+            font-size: 13px;
+            color: #555;
+            margin-top: 6px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 28px;
+            border: none;
+            border-radius: 8px;
+            background: #087bda;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-button:hover { background: #005bb5; }
+
+        .notice {
+            background: #fff3cd;
+            color: #856404;
+            padding: 14px;
+            border-radius: 8px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: #087bda;
+            text-decoration: none;
+        }
+
+        @media(max-width: 600px) {
+            .form-container { padding: 20px; }
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h2>VEHICLE FINDER</h2>
+    <a href="/">← Back to Home</a>
+</header>
+
+<main class="form-container">
+    <h1>Sell Your Vehicle</h1>
+    <p class="subtitle">Submit your vehicle advertisement</p>
+
+    {% if message %}
+        <div class="notice">{{ message }}</div>
+    {% endif %}
+
+    <form id="vehicleForm"
+          action="{{ url_for('submit_vehicle') }}"
+          method="POST"
+          enctype="multipart/form-data">
+
+        <label>Vehicle Type *</label>
+        <select name="vehicle_type" required>
+            <option value="">Select Vehicle Type</option>
+            <option value="Car">Car</option>
+            <option value="Bike">Bike</option>
+        </select>
+
+        <label>Vehicle Name *</label>
+        <input type="text" name="vehicle_name"
+               placeholder="Example: Toyota Aqua / Honda Dio"
+               maxlength="100" required>
+
+        <label>Manufacturing Year</label>
+        <input type="number" name="year"
+               placeholder="Example: 2020"
+               min="1900" max="2026">
+
+        <label>Selling Price (Rs.) *</label>
+        <input type="number" name="price"
+               placeholder="Example: 7500000"
+               min="1" step="1" required>
+
+        <label>Location (Optional)</label>
+        <input type="text" name="location"
+               placeholder="Example: Colombo, Kandy, Galle"
+               maxlength="100">
+
+        <label>Vehicle Description *</label>
+        <textarea id="description" name="description"
+                  placeholder="Describe your vehicle in Sinhala, English or Tamil..."
+                  required maxlength="3000"></textarea>
+
+        <div class="word-counter">
+            <span id="wordCount">0</span> / 200 words
+        </div>
+
+        <p class="help-text">
+            Maximum 200 words. Sinhala, English and Tamil are allowed.
+        </p>
+
+        <label>Vehicle Photos (Maximum 5) *</label>
+        <input type="file" id="vehicleImages"
+               name="vehicle_images"
+               accept=".jpg,.jpeg,.png,.webp"
+               multiple required>
+
+        <p class="help-text">
+            Upload up to 5 photos. JPG, JPEG, PNG and WEBP only.
+            Maximum 10 MB per photo.
+        </p>
+
+        <div class="notice">
+            <strong>Important:</strong>
+            Your advertisement will remain pending until our
+            admin team reviews and approves it.
+            Approval is targeted within 24 hours.
+        </div>
+
+        <button type="submit" class="submit-button">
+            Submit Advertisement
+        </button>
+    </form>
+
+    <a href="/" class="back-link">Cancel and Return Home</a>
+</main>
+
+<script>
+    const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
+
+    const description = document.getElementById("description");
+    const wordCount = document.getElementById("wordCount");
+    const imageInput = document.getElementById("vehicleImages");
+    const vehicleForm = document.getElementById("vehicleForm");
+
+    function countWords(text) {
+        return text.trim().length === 0
+            ? 0
+            : text.trim().split(/\s+/u).length;
+    }
+
+    description.addEventListener("input", function() {
+        const words = countWords(description.value);
+        wordCount.textContent = words;
+        wordCount.style.color = words > 200 ? "red" : "green";
+    });
+
+    imageInput.addEventListener("change", function() {
+        const files = Array.from(this.files);
+
+        if (files.length > 5) {
+            alert("You can upload a maximum of 5 photos.");
+            this.value = "";
+            return;
+        }
+
+        for (const file of files) {
+            if (file.size > MAX_IMAGE_SIZE) {
+                alert(
+                    "Image Upload Failed!\n\n" +
+                    '"' + file.name + '" is larger than 10 MB.\n' +
+                    "Please select an image of 10 MB or less."
+                );
+
+                this.value = "";
+                return;
+            }
+        }
+    });
+
+    vehicleForm.addEventListener("submit", function(event) {
+        const files = Array.from(imageInput.files);
+
+        if (files.length > 5) {
+            event.preventDefault();
+            alert("You can upload a maximum of 5 photos.");
+            return;
+        }
+
+        for (const file of files) {
+            if (file.size > MAX_IMAGE_SIZE) {
+                event.preventDefault();
+                alert(
+                    "Image Upload Failed!\n\n" +
+                    '"' + file.name + '" is larger than 10 MB.\n' +
+                    "Please select an image of 10 MB or less."
+                );
+                return;
+            }
+        }
+
+        if (countWords(description.value) > 200) {
+            event.preventDefault();
+            alert("Description must not exceed 200 words.");
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} | Vehicle Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header>
+        <h2>Vehicle Finder</h2>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/#cars">Cars</a>
+            <a href="/#bikes">Bikes</a>
+        </nav>
+    </header>
+
+    <main style="max-width:900px; margin:40px auto; padding:25px;">
+
+        {% if page == "about" %}
+
+            <h1>About Us</h1>
+
+            <p>Welcome to Vehicle Finder.</p>
+
+            <p>
+                Vehicle Finder is an online platform where people can
+                discover cars and motorcycles for sale.
+            </p>
+
+            <p>
+                Visitors can browse vehicle advertisements and view
+                available vehicle information.
+            </p>
+
+            <h2>Contact Us</h2>
+
+            <p>
+                <strong>Voice / Call:</strong>
+                <a href="tel:+94720538499">+94 72053 8499</a>
+            </p>
+
+            <p>
+                <strong>WhatsApp:</strong>
+                <a href="https://wa.me/94774634253" target="_blank" rel="noopener noreferrer">
+                    +94 77463 4253
+                </a>
+            </p>
+
+        {% elif page == "privacy" %}
+
+            <h1>Privacy Policy</h1>
+
+            <p>We respect the privacy of our website visitors.</p>
+
+            <h3>Information We Collect</h3>
+
+            <p>
+                When users register or submit vehicle advertisements,
+                we may collect the information they provide.
+            </p>
+
+            <h3>Cookies</h3>
+
+            <p>
+                This website may use cookies to improve the user experience.
+            </p>
+
+            <h3>Advertising</h3>
+
+            <p>
+                Third-party advertising services, including Google AdSense
+                if enabled, may use cookies to display relevant advertisements.
+            </p>
+
+        {% elif page == "terms" %}
+
+            <h1>Terms and Conditions</h1>
+
+            <p>By using Vehicle Finder, you agree to these terms.</p>
+
+            <h3>Vehicle Advertisements</h3>
+
+            <p>
+                Users are responsible for providing accurate information
+                about vehicles they advertise.
+            </p>
+
+            <h3>Website Usage</h3>
+
+            <p>
+                Users must not use this website for illegal activities
+                or misleading advertisements.
+            </p>
+
+            <h3>Responsibility</h3>
+
+            <p>
+                Vehicle Finder is a listing platform. Buyers should
+                independently verify vehicle details before making a purchase.
+            </p>
+
+        {% endif %}
+
+        <p style="margin-top:30px;">
+            <a href="/">Back to Home</a>
+        </p>
+
+    </main>
+
+</body>
+</html>
